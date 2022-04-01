@@ -1,3 +1,5 @@
+import "./Start.css";
+
 export default function Start() {
   return (
     <header className="startHeader">
