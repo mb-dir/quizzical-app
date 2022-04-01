@@ -1,0 +1,20 @@
+.startHeader {
+  width: 230px;
+  text-align: center;
+}
+.startHeader__title {
+  margin: 0;
+}
+.startHeader__description {
+  margin: 0;
+}
+.startHeader__startQuiz {
+  width: 120px;
+  height: 35px;
+  margin-top: 15px;
+  padding: 5px 10px;
+  background-color: #4d5b9e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
