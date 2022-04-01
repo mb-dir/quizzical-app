@@ -1,9 +1,10 @@
+import Start from "./components/start/Start";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Hello World</h1>
-      </header>
+      {/* There will be a condition rendering - when user click "Start quiz" btn the view will change to quiz section */}
+      <Start />
     </div>
   );
 }
