@@ -4,10 +4,22 @@ import Quiz from "./components/quiz/Quiz";
 
 function App() {
   const [ isStart, setIsStart ] = React.useState(false);
+
+  function toggleToQuiz() {
+    setIsStart(true);
+  }
   return (
     <div className="App">
-      {/* There will be a condition rendering - when user click "Start quiz" btn the view will change to quiz section */}
-      {isStart ? <Quiz /> : <Start />}
+      {isStart ? (
+        <Quiz />
+      ) : (
+        // When user clicks the btn in Start this function will change the isStart to true and that will cause change the displayed component
+        <Start
+          toggleToQuiz={() => {
+            toggleToQuiz();
+          }}
+        />
+      )}
     </div>
   );
 }
