@@ -12,9 +12,19 @@ export default function Quiz() {
       .catch(err => console.log(err));
   }, []);
 
+  const questionsList = questions.map(question => {
+    return (
+      //Key must be an unique value, each question content is unique so I guess everything is correct
+      <section key={question.question} className="question quiz__question">
+        <p className="question__content">{question.question}</p>
+      </section>
+    );
+  });
+
   return (
     <main className="quiz">
-      <section className="question quiz__question">
+      {questionsList}
+      {/* <section className="question quiz__question">
         <p className="question__content">Extremely hard question</p>
         <ul className="question__answers">
           <li className="question__answer question__answer--checked">
@@ -40,7 +50,7 @@ export default function Quiz() {
           <li className="question__answer">Ansewr 4</li>
           <li className="question__answer">Ansewr 5</li>
         </ul>
-      </section>
+      </section> */}
       <button className="quiz__showAnswers">Show answers</button>
     </main>
   );
