@@ -1,5 +1,17 @@
+import React from "react";
 import "./Quiz.css";
 export default function Quiz() {
+  //The api returnes the object, but the questions are in an array so init value if state is an empty array - look here to see the structure of response: https://codepen.io/mb-dir/pen/LYeeJXM?editors=1011, or just use postman
+  const [ questions, setQuestions ] = React.useState([]);
+
+  //useEfect for sync the response from fetch with state(questions)
+  React.useEffect(() => {
+    fetch("https://opentdb.com/api.php?amount=5")
+      .then(res => res.json())
+      .then(res => setQuestions(res.results))
+      .catch(err => console.log(err));
+  }, []);
+
   return (
     <main className="quiz">
       <section className="question quiz__question">
