@@ -14,10 +14,8 @@ export default function Quiz() {
 
   const questionsList = questions.map(question => {
     //All answers = incorect + correct one
-    const possibilityAnswers = question.incorrect_answers;
+    const possibilityAnswers = [ ...question.incorrect_answers ];
     possibilityAnswers.push(question.correct_answer);
-    // I do not know why it add last(pushed) item(question.correct_answer) twice, and that broke the code
-    console.log(possibilityAnswers);
 
     return (
       //Key must be an unique value, each question content is unique so I guess everything is correct
