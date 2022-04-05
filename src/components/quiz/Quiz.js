@@ -56,19 +56,19 @@ export default function Quiz() {
   }, []);
 
   const questionsList = questions.map(question => {
-    //All answers = incorect + correct one
-    const possibilityAnswers = [ ...question.incorrect_answers ];
-    possibilityAnswers.push(question.correct_answer);
-
     return (
       //Key must be an unique value, each question content is unique so I guess everything is correct
-      <section key={question.question} className="question quiz__question">
-        <p className="question__content">{question.question}</p>
+      <section
+        key={question.questionContent}
+        className="question quiz__question"
+      >
+        <p className="question__content">{question.questionContent}</p>
+
         <ul className="question__answers">
-          {possibilityAnswers.map(answer => {
+          {question.answerDescription.map(answer => {
             return (
-              <li key={answer} className="question__answer">
-                {answer}
+              <li key={answer.content} className="question__answer">
+                {answer.content}
               </li>
             );
           })}
