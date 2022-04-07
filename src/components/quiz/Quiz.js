@@ -54,6 +54,9 @@ export default function Quiz() {
       })
       .catch(err => console.log(err));
   }, []);
+  function checkAnswer(answerContent) {
+    console.log(answerContent);
+  }
 
   const questionsList = questions.map(question => {
     return (
@@ -67,7 +70,11 @@ export default function Quiz() {
         <ul className="question__answers">
           {question.answerDescription.map(answer => {
             return (
-              <li key={answer.content} className="question__answer">
+              <li
+                key={answer.content}
+                className="question__answer"
+                onClick={() => checkAnswer(answer.content)}
+              >
                 {answer.content}
               </li>
             );
