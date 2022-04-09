@@ -54,24 +54,18 @@ export default function Quiz() {
       })
       .catch(err => console.log(err));
   }, []);
-  // BUG - this function updates the state, but also changes the structure of "question" state, go to line 88 for more info
   function checkAnswer(answerContent) {
-    // So crazy state structure makes it hard to update
-    setQuestions(prevAnswerStructure => {
-      // prevAnswerState - array with all info(questionContent and answerDescription array)
-      return prevAnswerStructure.map(prevAnswerDescription => {
-        // above: mapping throught questionContent and answerDescription(not throught elements of answerDescription)
-        // below: mapping throught elements of answerDescription
-        return prevAnswerDescription.answerDescription.map(el => {
-          //if those value metch that means we have to update the isChecked true, cuz user has clicked this answer
-          if (el.content === answerContent) {
-            return { ...el, isChecked: true };
-          } else {
-            return el;
-          }
-        });
+    // So crazy state structure makes it hard to update - update state in an imperative way
+
+    const stateCopy = [ ...questions ];
+    stateCopy.forEach(answerDescriptionStructure => {
+      answerDescriptionStructure.answerDescription.forEach(answer => {
+        if (answer.content === answerContent) {
+          answer.isChecked = !answer.isChecked;
+        }
       });
     });
+    setQuestions(stateCopy);
   }
 
   const questionsList = questions.map(question => {
@@ -84,21 +78,6 @@ export default function Quiz() {
         <p className="question__content">{question.questionContent}</p>
 
         <ul className="question__answers">
-          {console.log(question)}
-          {/* There is a bug. Durning first render question structure looks like in the 6-20, but after clicking an answer by user(checkAnswer function) questions is an array of answers, it look like:
-          [
-            {
-              content: Papyrus,
-              isChecked: true,
-              isCorrect: false,
-            },
-            {
-              content: Toriel,
-              isChecked: false,
-              isCorrect: false,
-            }
-          ]
-          */}
           {question.answerDescription.map(answer => {
             return (
               <li
