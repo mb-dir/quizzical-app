@@ -3,6 +3,7 @@ import Start from "./components/start/Start";
 import Quiz from "./components/quiz/Quiz";
 
 function App() {
+  //While working on this feature(load question form API) I set isStart to true, that there is no need to constantly switch the view after refreshing the app
   const [ isStart, setIsStart ] = React.useState(false);
 
   function toggleToQuiz() {
