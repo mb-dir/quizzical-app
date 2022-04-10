@@ -43,6 +43,8 @@ export default function Quiz() {
               content: answer,
               isChecked: false,
               isCorrect: answer === correct_answer ? true : false,
+              isCorrectlyMarked: null,
+              isIncorrectlyMarked: null,
               answerID: nanoid(),
             };
             answersDescription.push(answerDescription);
@@ -65,6 +67,21 @@ export default function Quiz() {
       answerDescriptionStructure.answerDescription.forEach(answer => {
         if (answer.answerID === answerID) {
           answer.isChecked = !answer.isChecked;
+        }
+      });
+    });
+    setQuestions(stateCopy);
+  }
+  function verifyAnswers() {
+    // So crazy state structure makes it hard to update - update state in an imperative way
+    const stateCopy = [ ...questions ];
+    stateCopy.forEach(answerDescriptionStructure => {
+      answerDescriptionStructure.answerDescription.forEach(answer => {
+        if (answer.isChecked && answer.isCorrect) {
+          answer.isCorrectlyMarked = true;
+        }
+        if (answer.isChecked && !answer.isCorrect) {
+          answer.isIncorrectlyMarked = false;
         }
       });
     });
@@ -126,7 +143,9 @@ export default function Quiz() {
           <li className="question__answer">Ansewr 5</li>
         </ul>
       </section> */}
-      <button className="quiz__showAnswers">Show answers</button>
+      <button onClick={verifyAnswers} className="quiz__showAnswers">
+        Show answers
+      </button>
     </main>
   );
 }
