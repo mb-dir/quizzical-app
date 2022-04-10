@@ -71,7 +71,6 @@ export default function Quiz() {
   }, []);
   function checkAnswer(answerID) {
     // So crazy state structure makes it hard to update - update state in an imperative way
-
     const stateCopy = [ ...questions ];
     stateCopy.forEach(answerDescriptionStructure => {
       answerDescriptionStructure.answerDescription.forEach(answer => {
@@ -100,7 +99,6 @@ export default function Quiz() {
 
   const questionsList = questions.map(question => {
     return (
-      //Key must be an unique value, each question content is unique so I guess everything is correct
       <section key={question.questionID} className="question quiz__question">
         <p className="question__content">{question.questionContent}</p>
 
@@ -136,33 +134,6 @@ export default function Quiz() {
   return (
     <main className="quiz">
       {questionsList}
-      {/* <section className="question quiz__question">
-        <p className="question__content">Extremely hard question</p>
-        <ul className="question__answers">
-          <li className="question__answer question__answer--checked">
-            Ansewr 1
-          </li>
-          <li className="question__answer question__answer--correct">
-            Ansewr 2
-          </li>
-          <li className="question__answer question__answer--incorrect">
-            Ansewr 3
-          </li>
-          <li className="question__answer">Ansewr 4</li>
-          <li className="question__answer">Ansewr 5</li>
-        </ul>
-      </section>
-
-      <section className="question quiz__question">
-        <p className="question__content">Another Extremely hard question</p>
-        <ul className="question__answers">
-          <li className="question__answer">Ansewr 1</li>
-          <li className="question__answer">Ansewr 2</li>
-          <li className="question__answer">Ansewr 3</li>
-          <li className="question__answer">Ansewr 4</li>
-          <li className="question__answer">Ansewr 5</li>
-        </ul>
-      </section> */}
       <button onClick={verifyAnswers} className="quiz__showAnswers">
         Show answers
       </button>
