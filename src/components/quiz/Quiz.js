@@ -36,7 +36,17 @@ export default function Quiz() {
           //imperative way of "extracting" the required data
           const { correct_answer, incorrect_answers, question } = questionObj;
           const possibilityAnswers = [ ...incorrect_answers ];
-          possibilityAnswers.push(correct_answer);
+          possibilityAnswers.push(correct_answer); //Now correct answer is at the last index, let's randomize it
+
+          //Random index
+          const randomIndex = Math.floor(
+            Math.random() * possibilityAnswers.length
+          );
+          //Put correct answer(so far last index) to random index
+          const temp = possibilityAnswers[randomIndex];
+          possibilityAnswers[randomIndex] =
+            possibilityAnswers[possibilityAnswers.length - 1];
+          possibilityAnswers[possibilityAnswers.length - 1] = temp;
 
           possibilityAnswers.forEach(answer => {
             const answerDescription = {
