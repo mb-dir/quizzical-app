@@ -1,5 +1,6 @@
 import React from "react";
 import "./Quiz.css";
+import { nanoid } from "nanoid";
 export default function Quiz() {
   //The api returnes the object, but the questions are in an array so init value if state is an empty array - look here to see the structure of response: https://codepen.io/mb-dir/pen/LYeeJXM?editors=1011, or just use postman
   //questions is an array of object, each obj describes the question(includes question content + answers, each ansewr is an separate obj keept in special array), example questions structure may look like:
@@ -42,11 +43,13 @@ export default function Quiz() {
               content: answer,
               isChecked: false,
               isCorrect: answer === correct_answer ? true : false,
+              answerID: nanoid(),
             };
             answersDescription.push(answerDescription);
           });
           questionDescription.questionContent = question;
           questionDescription.answerDescription = answersDescription;
+          questionDescription.questionID = nanoid();
           questions.push(questionDescription);
         });
 
