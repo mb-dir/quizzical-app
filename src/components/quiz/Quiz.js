@@ -96,12 +96,22 @@ export default function Quiz() {
 
         <ul className="question__answers">
           {question.answerDescription.map(answer => {
+            //In my opinion it is the most readable way to set an appropriate class name based on answer state
+            let className = "question__answer";
+            if (answer.isChecked) {
+              className = "question__answer question__answer--checked";
+            }
+            if (answer.isCorrectlyMarked) {
+              className = "question__answer question__answer--correct";
+            }
+            //By default isIncorrectlyMarked is null, when user clicks the btn, app verify correctness of the answers, if it is checked but incorrect isIncorrectlyMarked = false, that provides that only checked and incorrect answers will be "highlight"
+            if (answer.isIncorrectlyMarked === false) {
+              className = "question__answer question__answer--incorrect";
+            }
             return (
               <li
                 key={answer.content}
-                className={`question__answer ${answer.isChecked
-                  ? "question__answer--checked"
-                  : ""}`}
+                className={className}
                 onClick={() => checkAnswer(answer.answerID)}
               >
                 {answer.content}
