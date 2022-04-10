@@ -57,13 +57,13 @@ export default function Quiz() {
       })
       .catch(err => console.log(err));
   }, []);
-  function checkAnswer(answerContent) {
+  function checkAnswer(answerID) {
     // So crazy state structure makes it hard to update - update state in an imperative way
 
     const stateCopy = [ ...questions ];
     stateCopy.forEach(answerDescriptionStructure => {
       answerDescriptionStructure.answerDescription.forEach(answer => {
-        if (answer.content === answerContent) {
+        if (answer.answerID === answerID) {
           answer.isChecked = !answer.isChecked;
         }
       });
@@ -74,10 +74,7 @@ export default function Quiz() {
   const questionsList = questions.map(question => {
     return (
       //Key must be an unique value, each question content is unique so I guess everything is correct
-      <section
-        key={question.questionContent}
-        className="question quiz__question"
-      >
+      <section key={question.questionID} className="question quiz__question">
         <p className="question__content">{question.questionContent}</p>
 
         <ul className="question__answers">
@@ -88,7 +85,7 @@ export default function Quiz() {
                 className={`question__answer ${answer.isChecked
                   ? "question__answer--checked"
                   : ""}`}
-                onClick={() => checkAnswer(answer.content)}
+                onClick={() => checkAnswer(answer.answerID)}
               >
                 {answer.content}
               </li>
