@@ -134,9 +134,12 @@ export default function Quiz() {
   return (
     <main className="quiz">
       {questionsList}
-      <button onClick={verifyAnswers} className="quiz__showAnswers">
-        Show answers
-      </button>
+      <div className="quiz__summary">
+        <p className="quiz__correctAnswers">Correct answers: 0/5</p>
+        <button onClick={verifyAnswers} className="quiz__showAnswers">
+          Show answers
+        </button>
+      </div>
     </main>
   );
 }
