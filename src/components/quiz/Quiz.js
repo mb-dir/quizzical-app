@@ -20,6 +20,7 @@ export default function Quiz() {
   //  ]
   // }]
   const [ questions, setQuestions ] = React.useState([]);
+  const [ howManyCorrect, setHowManyCorrect ] = React.useState(0);
 
   //useEfect for sync the response from fetch with state(questions)
   React.useEffect(() => {
@@ -82,12 +83,15 @@ export default function Quiz() {
     setQuestions(stateCopy);
   }
   function verifyAnswers() {
+    let correctAnswersNumner = 0;
     // So crazy state structure makes it hard to update - update state in an imperative way
     const stateCopy = [ ...questions ];
     stateCopy.forEach(answerDescriptionStructure => {
       answerDescriptionStructure.answerDescription.forEach(answer => {
         if (answer.isChecked && answer.isCorrect) {
           answer.isCorrectlyMarked = true;
+          //by the way, count the number of correct answers
+          correctAnswersNumner++;
         }
         if (answer.isChecked && !answer.isCorrect) {
           answer.isIncorrectlyMarked = false;
@@ -95,6 +99,7 @@ export default function Quiz() {
       });
     });
     setQuestions(stateCopy);
+    setHowManyCorrect(correctAnswersNumner);
   }
 
   const questionsList = questions.map(question => {
@@ -135,7 +140,9 @@ export default function Quiz() {
     <main className="quiz">
       {questionsList}
       <div className="quiz__summary">
-        <p className="quiz__correctAnswers">Correct answers: 0/5</p>
+        <p className="quiz__correctAnswers">
+          Correct answers: {howManyCorrect}/5
+        </p>
         <button onClick={verifyAnswers} className="quiz__showAnswers">
           Show answers
         </button>
