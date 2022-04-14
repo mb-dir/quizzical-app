@@ -18,3 +18,6 @@
   border: none;
   border-radius: 5px;
 }
+.startHeader__startQuiz:hover {
+  cursor: pointer;
+}
