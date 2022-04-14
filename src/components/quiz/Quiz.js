@@ -21,6 +21,7 @@ export default function Quiz() {
   // }]
   const [ questions, setQuestions ] = React.useState([]);
   const [ howManyCorrect, setHowManyCorrect ] = React.useState(0);
+  const [ isGameEnd, setIsGameEnd ] = React.useState(false);
 
   //useEfect for sync the response from fetch with state(questions)
   React.useEffect(() => {
@@ -100,6 +101,8 @@ export default function Quiz() {
     });
     setQuestions(stateCopy);
     setHowManyCorrect(correctAnswersNumner);
+    //After verify the answers game is ended - this state is used to conditionally render two buttons(play again and show answers)
+    setIsGameEnd(true);
   }
 
   const questionsList = questions.map(question => {
@@ -143,9 +146,13 @@ export default function Quiz() {
         <p className="quiz__correctAnswers">
           Correct answers: {howManyCorrect}/5
         </p>
-        <button onClick={verifyAnswers} className="quiz__showAnswers">
-          Show answers
-        </button>
+        {isGameEnd ? (
+          <button className="quiz__showAnswers">Play again</button>
+        ) : (
+          <button onClick={verifyAnswers} className="quiz__showAnswers">
+            Show answers
+          </button>
+        )}
       </div>
     </main>
   );
