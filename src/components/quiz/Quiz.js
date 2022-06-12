@@ -120,9 +120,14 @@ export default function Quiz() {
   }
 
   const questionsList = questions.map(question => {
+    //Below unicodes/alphanumeric values wern't convert properly, so in order to display ' insted e.g &#039; I use replaceAll with simple regex
+    const questionContentWithInterpunction = question.questionContent.replaceAll(
+      /&quot;|&#039;|&ldquo;|&rdquo;/g,
+      "'"
+    );
     return (
       <section key={question.questionID} className="question quiz__question">
-        <p className="question__content">{question.questionContent}</p>
+        <p className="question__content">{questionContentWithInterpunction}</p>
 
         <ul className="question__answers">
           {question.answerDescription.map(answer => {
@@ -138,13 +143,17 @@ export default function Quiz() {
             if (answer.isIncorrectlyMarked === false) {
               className = "question__answer question__answer--incorrect";
             }
+            const answerContentWithInterpunction = answer.content.replaceAll(
+              /&quot;|&#039;|&ldquo;|&rdquo;/g,
+              "'"
+            );
             return (
               <li
                 key={answer.content}
                 className={className}
                 onClick={() => checkAnswer(answer.answerID)}
               >
-                {answer.content}
+                {answerContentWithInterpunction}
               </li>
             );
           })}
