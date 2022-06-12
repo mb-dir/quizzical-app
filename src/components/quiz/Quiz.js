@@ -120,9 +120,15 @@ export default function Quiz() {
   }
 
   const questionsList = questions.map(question => {
+    //Below unicodes/alphanumeric values wern't convert properly, so in order to display ' insted e.g &#039; I use replaceAll with simple regex
+    const questionContentWithInterpunction = question.questionContent.replaceAll(
+      /&quot;|&#039;|&ldquo;|&rdquo;/g,
+      "'"
+    );
+    console.log(questionContentWithInterpunction);
     return (
       <section key={question.questionID} className="question quiz__question">
-        <p className="question__content">{question.questionContent}</p>
+        <p className="question__content">{questionContentWithInterpunction}</p>
 
         <ul className="question__answers">
           {question.answerDescription.map(answer => {
