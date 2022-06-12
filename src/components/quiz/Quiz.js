@@ -144,13 +144,17 @@ export default function Quiz() {
             if (answer.isIncorrectlyMarked === false) {
               className = "question__answer question__answer--incorrect";
             }
+            const answerContentWithInterpunction = answer.content.replaceAll(
+              /&quot;|&#039;|&ldquo;|&rdquo;/g,
+              "'"
+            );
             return (
               <li
                 key={answer.content}
                 className={className}
                 onClick={() => checkAnswer(answer.answerID)}
               >
-                {answer.content}
+                {answerContentWithInterpunction}
               </li>
             );
           })}
