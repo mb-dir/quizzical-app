@@ -125,7 +125,6 @@ export default function Quiz() {
       /&quot;|&#039;|&ldquo;|&rdquo;/g,
       "'"
     );
-    console.log(questionContentWithInterpunction);
     return (
       <section key={question.questionID} className="question quiz__question">
         <p className="question__content">{questionContentWithInterpunction}</p>
