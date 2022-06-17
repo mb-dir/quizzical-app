@@ -1,5 +1,6 @@
 import React from "react";
 import "./Quiz.css";
+import QuizContent from "./QuizContent";
 import { nanoid } from "nanoid";
 export default function Quiz() {
   //The api returnes the object, but the questions are in an array so init value if state is an empty array - look here to see the structure of response: https://codepen.io/mb-dir/pen/LYeeJXM?editors=1011, or just use postman
@@ -125,4 +126,18 @@ export default function Quiz() {
     setIsGameEnd(false);
     setHowManyCorrect(0);
   }
+
+  return (
+    <main className="quiz">
+      <QuizContent
+        questions={questions}
+        howManyCorrect={howManyCorrect}
+        isGameEnd={isGameEnd}
+        requestStatus={requestStatus}
+        checkAnswer={checkAnswer}
+        verifyAnswers={verifyAnswers}
+        newQuestions={newQuestions}
+      />
+    </main>
+  );
 }
