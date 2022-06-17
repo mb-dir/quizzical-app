@@ -118,6 +118,8 @@ export default function Quiz() {
   function newQuestions() {
     //useEffect which gets questions from api dependes on this state, so in order to reset questions after clicking "play again" btn I have to chenge this state in some way
     setRenderNewQuestions(prev => prev + 1);
+    //Getting new questions mesnt that request is sent again, so status must be set to pending again
+    setRequestStatus("pending");
 
     //Reset everything
     setIsGameEnd(false);
