@@ -22,6 +22,8 @@ export default function Quiz() {
   const [ questions, setQuestions ] = React.useState([]);
   const [ howManyCorrect, setHowManyCorrect ] = React.useState(0);
   const [ isGameEnd, setIsGameEnd ] = React.useState(false);
+  //Default value of requestState is pending, cuz after clicking "start quiz" the request is sent immediately
+  const [ requestStatus, setRequestStatus ] = React.useState("pending");
   //This state serves to communicate that new questions need to be rendered - it is used in [](2nd parameter) in useEffect(api request) - each change of this state causes getting new portion of questions
   const [ renderNewQuestions, setRenderNewQuestions ] = React.useState(0);
 
@@ -71,8 +73,11 @@ export default function Quiz() {
           });
 
           setQuestions(questions);
+          setRequestStatus("resolved");
         })
-        .catch(err => console.log(err));
+        .catch(() => {
+          setRequestStatus("rejected");
+        });
     },
     [ renderNewQuestions ]
   );
@@ -113,6 +118,8 @@ export default function Quiz() {
   function newQuestions() {
     //useEffect which gets questions from api dependes on this state, so in order to reset questions after clicking "play again" btn I have to chenge this state in some way
     setRenderNewQuestions(prev => prev + 1);
+    //Getting new questions mesnt that request is sent again, so status must be set to pending again
+    setRequestStatus("pending");
 
     //Reset everything
     setIsGameEnd(false);
@@ -162,23 +169,33 @@ export default function Quiz() {
     );
   });
 
-  return (
-    <main className="quiz">
-      {questionsList}
-      <div className="quiz__summary">
-        <p className="quiz__correctAnswers">
-          Correct answers: {howManyCorrect}/5
-        </p>
-        {isGameEnd ? (
-          <button onClick={newQuestions} className="quiz__showAnswers">
-            Play again
-          </button>
-        ) : (
-          <button onClick={verifyAnswers} className="quiz__showAnswers">
-            Show answers
-          </button>
-        )}
+  //Content based on requestStatus
+  let contentBasedOnRequestStatus;
+  if (requestStatus === "pending") {
+    contentBasedOnRequestStatus = <p>Wait for questions</p>;
+  } else if (questions.length === 0 || requestStatus === "rejected") {
+    //Sometimes despite of invalid http address in fetch the request status is 200, and API returnes an empty array, that's the reason of above condition
+    contentBasedOnRequestStatus = <p>Something went wrong</p>;
+  } else if (requestStatus === "resolved") {
+    contentBasedOnRequestStatus = (
+      <div>
+        {questionsList}
+        <div className="quiz__summary">
+          <p className="quiz__correctAnswers">
+            Correct answers: {howManyCorrect}/5
+          </p>
+          {isGameEnd ? (
+            <button onClick={newQuestions} className="quiz__showAnswers">
+              Play again
+            </button>
+          ) : (
+            <button onClick={verifyAnswers} className="quiz__showAnswers">
+              Show answers
+            </button>
+          )}
+        </div>
       </div>
-    </main>
-  );
+    );
+  }
+  return <main className="quiz">{contentBasedOnRequestStatus}</main>;
 }
