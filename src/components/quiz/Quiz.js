@@ -73,8 +73,11 @@ export default function Quiz() {
           });
 
           setQuestions(questions);
+          setRequestStatus("resolved");
         })
-        .catch(err => console.log(err));
+        .catch(() => {
+          setRequestStatus("rejected");
+        });
     },
     [ renderNewQuestions ]
   );
