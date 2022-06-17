@@ -22,6 +22,8 @@ export default function Quiz() {
   const [ questions, setQuestions ] = React.useState([]);
   const [ howManyCorrect, setHowManyCorrect ] = React.useState(0);
   const [ isGameEnd, setIsGameEnd ] = React.useState(false);
+  //Default value of requestState is pending, cuz after clicking "start quiz" the request is sent immediately
+  const [ requestStatus, setRequestStatus ] = React.useState("pending");
   //This state serves to communicate that new questions need to be rendered - it is used in [](2nd parameter) in useEffect(api request) - each change of this state causes getting new portion of questions
   const [ renderNewQuestions, setRenderNewQuestions ] = React.useState(0);
 
