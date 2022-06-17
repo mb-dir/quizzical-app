@@ -167,23 +167,33 @@ export default function Quiz() {
     );
   });
 
-  return (
-    <main className="quiz">
-      {questionsList}
-      <div className="quiz__summary">
-        <p className="quiz__correctAnswers">
-          Correct answers: {howManyCorrect}/5
-        </p>
-        {isGameEnd ? (
-          <button onClick={newQuestions} className="quiz__showAnswers">
-            Play again
-          </button>
-        ) : (
-          <button onClick={verifyAnswers} className="quiz__showAnswers">
-            Show answers
-          </button>
-        )}
+  //Content based on requestStatus
+  let contentBasedOnRequestStatus;
+  if (requestStatus === "pending") {
+    contentBasedOnRequestStatus = <p>Wait for questions</p>;
+  } else if (questions.length === 0 || requestStatus === "rejected") {
+    //Sometimes despite of invalid http address in fetch the request status is 200, and API returnes an empty array, that's the reason of above condition
+    contentBasedOnRequestStatus = <p>Something went wrong</p>;
+  } else if (requestStatus === "resolved") {
+    contentBasedOnRequestStatus = (
+      <div>
+        {questionsList}
+        <div className="quiz__summary">
+          <p className="quiz__correctAnswers">
+            Correct answers: {howManyCorrect}/5
+          </p>
+          {isGameEnd ? (
+            <button onClick={newQuestions} className="quiz__showAnswers">
+              Play again
+            </button>
+          ) : (
+            <button onClick={verifyAnswers} className="quiz__showAnswers">
+              Show answers
+            </button>
+          )}
+        </div>
       </div>
-    </main>
-  );
+    );
+  }
+  return <main className="quiz">{contentBasedOnRequestStatus}</main>;
 }
